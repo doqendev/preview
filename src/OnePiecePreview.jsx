@@ -17,8 +17,7 @@ export async function drawOnePiece(ctx, text, variant) {
   const primaryColor = cfg.defaultSecondaryColor;
   const secondaryColor = cfg.defaultPrimaryColor;
   const maxFontSize = Math.min(400, CANVAS_H * 0.5);
-  const baseFontSize = txt.length > 9 ? maxFontSize * 0.7 : maxFontSize;
-  const fontSize = baseFontSize;
+  const fontSize = maxFontSize;
 
   const off = document.createElement('canvas');
   off.width = CANVAS_W;

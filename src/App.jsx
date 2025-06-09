@@ -9,20 +9,14 @@ import {
   Paper,
   FormControl,
   InputLabel,
-  Switch,
-  FormControlLabel,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
+  
   CssBaseline,
   ThemeProvider,
   createTheme,
 } from '@mui/material'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {
   CANVAS_W,
   CANVAS_H,
-  CUSTOM_BG_MAIN,
 } from './previewConfig'
 import { drawOnePiece } from './OnePiecePreview.jsx'
 
@@ -53,8 +47,6 @@ const VARIANTS = {
 export default function App() {
   const [text, setText] = useState('preview')
   const [variant, setVariant] = useState('char1')
-  const [showAdvanced, setShowAdvanced] = useState(false)
-  const [useCustomBackground, setUseCustomBackground] = useState(false)
   const canvasRef = useRef(null)
 
   const muiTheme = React.useMemo(() => createTheme({
@@ -81,8 +73,8 @@ export default function App() {
     if (!canvas) return
     const ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, CANVAS_W, CANVAS_H)
-    drawOnePiece(ctx, text, variant, useCustomBackground)
-  }, [text, variant, useCustomBackground])
+    drawOnePiece(ctx, text, variant)
+  }, [text, variant])
 
   return (
     <ThemeProvider theme={muiTheme}>
@@ -160,29 +152,7 @@ export default function App() {
             inputProps={{ maxLength: 32 }}
           />
 
-          {/* Advanced Options Accordion */}
-          <Box sx={{ width: '100%', mt: 2 }}>
-            <Accordion expanded={showAdvanced} onChange={() => setShowAdvanced(!showAdvanced)} sx={{background: 'rgba(255,255,255,0.8)', boxShadow: 'none', border: '1px solid rgba(0,0,0,0.1)'}}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="advanced-options-content"
-                id="advanced-options-header"
-              >
-                <Typography>Advanced Options</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={useCustomBackground}
-                      onChange={(e) => setUseCustomBackground(e.target.checked)}
-                    />
-                  }
-                  label="Use Custom Background"
-                />
-              </AccordionDetails>
-            </Accordion>
-          </Box>
+
 
           <Box
             sx={{

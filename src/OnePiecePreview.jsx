@@ -11,13 +11,13 @@ export async function drawOnePiece(ctx, text, variant) {
   ctx.drawImage(bg, 0, 0, CANVAS_W, CANVAS_H);
   ctx.restore();
 
-  const txt = text.toUpperCase().substring(0, 12);
+  const txt = text.toUpperCase().substring(0, 10);
   await document.fonts.load('bold 50px ONEPIECE_IL_FINAL');
   const cfg = ONEPIECE_STYLE_CONFIGS[variant] || ONEPIECE_STYLE_CONFIGS.char1;
   const primaryColor = cfg.defaultSecondaryColor;
   const secondaryColor = cfg.defaultPrimaryColor;
   const maxFontSize = Math.min(400, CANVAS_H * 0.5);
-  const baseFontSize = txt.length > 11 ? maxFontSize * 0.7 : maxFontSize;
+  const baseFontSize = txt.length > 9 ? maxFontSize * 0.7 : maxFontSize;
   const fontSize = baseFontSize;
 
   const off = document.createElement('canvas');

@@ -143,9 +143,9 @@ export default function App() {
             variant="outlined"
             label="Your Text"
             value={text}
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e) => setText(e.target.value.slice(0, 10))}
             onFocus={() => { if (text === 'preview') setText('') }}
-            inputProps={{ maxLength: 32 }}
+            inputProps={{ maxLength: 10 }}
           />
 
 

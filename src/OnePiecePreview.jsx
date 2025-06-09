@@ -1,37 +1,30 @@
 import { CANVAS_W, CANVAS_H, LOGO_OFFSET_Y, CUSTOM_BG_MAIN, CUSTOM_BG_SECOND, ONEPIECE_STYLE_CONFIGS, ONEPIECE_SCALE_NORMAL, ONEPIECE_SCALE_SMALL, ONEPIECE_OFFSET_Y_NORMAL, ONEPIECE_OFFSET_Y_SMALL } from './previewConfig';
 
-export async function drawOnePiece(ctx, text, variant, useCustomBackground) {
+export async function drawOnePiece(ctx, text, variant) {
   ctx.clearRect(0, 0, CANVAS_W, CANVAS_H);
-  // Draw custom background if enabled
-  if (useCustomBackground) {
-    const bg = new Image();
-    const txtLen = text.replace(/\s/g, '').length;
-    bg.src = txtLen > 6 ? CUSTOM_BG_SECOND : CUSTOM_BG_MAIN;
-    await new Promise(r => (bg.onload = r));
-    ctx.save();
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.drawImage(bg, 0, 0, CANVAS_W, CANVAS_H);
-    ctx.restore();
-  }
+  const bg = new Image();
+  const txtLen = text.replace(/\s/g, '').length;
+  bg.src = txtLen > 6 ? CUSTOM_BG_SECOND : CUSTOM_BG_MAIN;
+  await new Promise(r => (bg.onload = r));
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.drawImage(bg, 0, 0, CANVAS_W, CANVAS_H);
+  ctx.restore();
 
-  const txt = text.toUpperCase().substring(0, 12);
+  const txt = text.toUpperCase().substring(0, 10);
   await document.fonts.load('bold 50px ONEPIECE_IL_FINAL');
   const cfg = ONEPIECE_STYLE_CONFIGS[variant] || ONEPIECE_STYLE_CONFIGS.char1;
   const primaryColor = cfg.defaultSecondaryColor;
   const secondaryColor = cfg.defaultPrimaryColor;
   const maxFontSize = Math.min(400, CANVAS_H * 0.5);
-  const baseFontSize = txt.length > 11 ? maxFontSize * 0.7 : maxFontSize;
+  const baseFontSize = txt.length > 9 ? maxFontSize * 0.7 : maxFontSize;
   const fontSize = baseFontSize;
 
   const off = document.createElement('canvas');
   off.width = CANVAS_W;
   off.height = CANVAS_H;
   const offCtx = off.getContext('2d');
-  if (!useCustomBackground) {
-    offCtx.fillStyle = '#fff'; offCtx.fillRect(0, 0, off.width, off.height);
-  } else {
-    offCtx.clearRect(0, 0, off.width, off.height);
-  }
+  offCtx.clearRect(0, 0, off.width, off.height);
 
   const boxImg = new Image(); boxImg.src = new URL(`./assets/${cfg.boxFilename}`, import.meta.url).href;
   await new Promise(r => (boxImg.onload = r));

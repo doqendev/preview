@@ -116,13 +116,9 @@ export default function App() {
             sx={{
               fontSize: { xs: '2.3rem', sm: '3.2rem' },
               letterSpacing: '0.04em',
-              background: 'linear-gradient(120deg,#ff4ecd 40%,#4361ee 70%,#fff 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              color: 'transparent',
             }}
           >
-            One Piece Logo Previewer
+            Preview
           </Typography>
 
           <FormControl fullWidth variant="outlined">
@@ -172,15 +168,6 @@ export default function App() {
           </Box>
 
         </Paper>
-
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          align="center"
-          sx={{ mt: 4, opacity: 0.7 }}
-        >
-          &copy; {new Date().getFullYear()} Logo Previewer — UI by Material UI.
-        </Typography>
       </Container>
     </ThemeProvider>
   )

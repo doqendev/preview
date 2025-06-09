@@ -88,21 +88,24 @@ export default function App() {
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
       <Container
-        maxWidth="sm"
+        maxWidth={false}
+        disableGutters
         sx={{
           minHeight: '100%',
+          width: '100%',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           bgcolor: 'background.default',
-          py: 6,
+          p: 2,
         }}
       >
         <Paper
           elevation={6}
           sx={{
             width: '100%',
+            minHeight: '100%',
             p: { xs: 2, sm: 5 },
             borderRadius: 6,
             display: 'flex',

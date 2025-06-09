@@ -15,6 +15,9 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
 } from '@mui/material'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { CANVAS_W, CANVAS_H, LOGO_OFFSET_Y, CUSTOM_BG_MAIN } from './previewConfig';
@@ -131,11 +134,18 @@ export default function App() {
   const [theme, setTheme] = useState('anime')
   const [specific, setSpecific] = useState('naruto')
   const [variant, setVariant] = useState('')
+  const [darkMode, setDarkMode] = useState(false)
   const canvasRef = useRef(null)
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [useCustomBackground, setUseCustomBackground] = useState(false);
   // Vertical offset for all logos; adjust this value in code as needed
   const LOGO_OFFSET_Y = 0;
+
+  const muiTheme = React.useMemo(() => createTheme({
+    palette: {
+      mode: darkMode ? 'dark' : 'light',
+    },
+  }), [darkMode])
 
   const currentTheme = THEMES.find((t) => t.value === theme)
   const currentSpecific = currentTheme.options.find((o) => o.value === specific)
@@ -304,12 +314,14 @@ export default function App() {
     : text.toUpperCase()
 
   return (
-    <Container
-      maxWidth="sm"
-      sx={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
+    <ThemeProvider theme={muiTheme}>
+      <CssBaseline />
+      <Container
+        maxWidth="sm"
+        sx={{
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         bgcolor: 'background.default',
@@ -327,10 +339,24 @@ export default function App() {
           alignItems: 'center',
           gap: 5,
           backdropFilter: 'blur(12px)',
-          background: 'rgba(255,255,255,0.95)',
+          background: (theme) =>
+            theme.palette.mode === 'dark'
+              ? 'rgba(30,30,30,0.85)'
+              : 'rgba(255,255,255,0.95)',
           boxShadow: '0 10px 30px 4px #bbb5',
         }}
       >
+        <Box sx={{ alignSelf: 'flex-end' }}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={darkMode}
+                onChange={() => setDarkMode(prev => !prev)}
+              />
+            }
+            label="Dark Mode"
+          />
+        </Box>
         <Typography
           variant="h2"
           align="center"
@@ -471,7 +497,8 @@ export default function App() {
             display: 'flex',
             justifyContent: 'center',
             mt: 2,
-            border: '1px solid #ccc', // Added a subtle border to canvas/preview area
+            border: '1px solid',
+            borderColor: 'divider',
             overflow: 'hidden', // Ensure canvas content fits
           }}
         >
@@ -513,5 +540,6 @@ export default function App() {
         &copy; {new Date().getFullYear()} Logo Previewer — UI by Material UI.
       </Typography>
     </Container>
+    </ThemeProvider>
   )
 }

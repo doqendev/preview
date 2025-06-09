@@ -98,7 +98,6 @@ export default function App() {
           justifyContent: 'center',
           alignItems: 'center',
           bgcolor: 'background.default',
-          p: 2,
         }}
       >
         <Paper
@@ -188,8 +187,7 @@ export default function App() {
           <Box
             sx={{
               width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
+              display: 'block',
               mt: 2,
               border: '1px solid',
               borderColor: 'divider',
@@ -199,7 +197,7 @@ export default function App() {
               ref={canvasRef}
               width={CANVAS_W}
               height={CANVAS_H}
-              style={{ width: '100%', height: 'auto' }}
+              style={{ width: '100%', height: 'auto', display: 'block' }}
             />
           </Box>
 

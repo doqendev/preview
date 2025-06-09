@@ -160,6 +160,21 @@ export default function App() {
     if (specific !== 'metallica' && use3D) setUse3D(false)
   }, [specific, use3D])
 
+  // send height updates to parent iframe for responsive embedding
+  useEffect(() => {
+    const sendHeight = () => {
+      if (window.parent !== window) {
+        window.parent.postMessage({
+          type: 'logo-previewer-height',
+          height: document.body.scrollHeight,
+        }, '*')
+      }
+    }
+    sendHeight()
+    window.addEventListener('resize', sendHeight)
+    return () => window.removeEventListener('resize', sendHeight)
+  }, [])
+
   useEffect(() => {
     const draw = async () => {
       const canvas = canvasRef.current; if (!canvas) return;
@@ -319,7 +334,7 @@ export default function App() {
       <Container
         maxWidth="sm"
         sx={{
-          minHeight: '100vh',
+          minHeight: '100%',
           display: 'flex',
           flexDirection: 'column',
         justifyContent: 'center',

@@ -9,7 +9,6 @@ import {
   Paper,
   FormControl,
   InputLabel,
-  Button,
   Switch,
   FormControlLabel,
   Accordion,
@@ -23,7 +22,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {
   CANVAS_W,
   CANVAS_H,
-  LOGO_OFFSET_Y,
   CUSTOM_BG_MAIN,
 } from './previewConfig'
 import { drawOnePiece } from './OnePiecePreview.jsx'
@@ -51,19 +49,17 @@ const VARIANTS = {
   ],
 }
 
-const PRODUCT_PAGE_URL = 'https://www.weletyoucook.com/product-page/anime-custom-desksign'
 
 export default function App() {
   const [text, setText] = useState('preview')
   const [variant, setVariant] = useState('char1')
-  const [darkMode, setDarkMode] = useState(false)
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [useCustomBackground, setUseCustomBackground] = useState(false)
   const canvasRef = useRef(null)
 
   const muiTheme = React.useMemo(() => createTheme({
-    palette: { mode: darkMode ? 'dark' : 'light' },
-  }), [darkMode])
+    palette: { mode: 'light' },
+  }), [])
 
   // send height updates to parent iframe for responsive embedding
   useEffect(() => {
@@ -114,24 +110,10 @@ export default function App() {
             alignItems: 'center',
             gap: 5,
             backdropFilter: 'blur(12px)',
-            background: (theme) =>
-              theme.palette.mode === 'dark'
-                ? 'rgba(30,30,30,0.85)'
-                : 'rgba(255,255,255,0.95)',
+            background: 'rgba(255,255,255,0.95)',
             boxShadow: '0 10px 30px 4px #bbb5',
           }}
         >
-          <Box sx={{ alignSelf: 'flex-end' }}>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={darkMode}
-                  onChange={() => setDarkMode(prev => !prev)}
-                />
-              }
-              label="Dark Mode"
-            />
-          </Box>
           <Typography
             variant="h2"
             align="center"
@@ -208,22 +190,16 @@ export default function App() {
               mt: 2,
               border: '1px solid',
               borderColor: 'divider',
-              overflow: 'hidden',
             }}
           >
-            <canvas ref={canvasRef} width={CANVAS_W} height={CANVAS_H} />
+            <canvas
+              ref={canvasRef}
+              width={CANVAS_W}
+              height={CANVAS_H}
+              style={{ width: '100%', height: 'auto' }}
+            />
           </Box>
 
-          <Button
-            variant="contained"
-            color="primary"
-            sx={{ mt: 4, py: 1.5, px: 5, fontSize: '1.1rem', borderRadius: 3, fontWeight: 'bold' }}
-            onClick={() => {
-              window.open(PRODUCT_PAGE_URL, '_blank')
-            }}
-          >
-            Buy Now
-          </Button>
         </Paper>
 
         <Typography
